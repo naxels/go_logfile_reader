@@ -1,0 +1,13 @@
+2015/12/22 07:38:06 - Kitchen - Start of run.
+2015/12/22 07:38:06 - RepositoriesMeta - Reading repositories XML file: /home/user/.kettle/repositories.xml
+2015/12/22 07:38:07 - PRODJOB - Start of job execution
+2015/12/22 07:38:07 - PRODJOB - Starting entry [TOOL]
+2015/12/22 07:39:21 - Table output tool_copy.0 - Connected to database [localhost] (commit=500)
+2015/12/22 07:39:50 - TOOLCSV input.0 - Finished processing (I=3796, O=0, R=0, W=3796, U=0, E=2)
+2015/12/22 07:42:32 - ERROR TOOLCSV.0 - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+2015/12/22 07:40:04 - Table Output tool_copy.0 - Finished processing (I=0, O=0, R=3794, W=0, U=0, E=0)
+2015/12/22 07:42:32 - PRODJOB - Finished job entry [TOOL] (result=[true])
+2015/12/22 07:42:32 - PRODJOB - Job execution finished
+2015/12/22 07:42:32 - Kitchen - Finished!
+2015/12/22 07:42:32 - Kitchen - Start=2015/12/22 07:38:06.033, Stop=2015/12/22 07:42:32.543
+2015/12/22 07:42:32 - Kitchen - Processing ended after 4 minutes and 26 seconds (266 seconds total).
