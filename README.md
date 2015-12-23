@@ -1,13 +1,12 @@
 # Log file reader written in Golang
 
 Simple Golang logfile reader written to help read in a logfile
-and do a RegEx to highlight words on a line
+and do a RegEx to for example highlight matches on a line
 
 **TODO:**
-- option to tell how many lines to read
-- option to read from head or tail
-- option to input a RegEx pattern which is used to highlight text in each line
-- create tests (fulltext read, head + lines read, tail + lines read, RegEx pattern, lines to read larger than file (catch too many lines))
+- implement the option only read given number of lines from file
+- implement the option to read from head or tail
+- create tests (head + lines read, tail + lines read, lines to read larger than file (catch more lines than 'file' error without user error))
 
 
 You can use a go routine to input a volume of log files and get lines back
@@ -33,5 +32,8 @@ if err != nil {
 
 fmt.Println(result.Filename)
 
-..TODO.. process each line
+//loop over each line
+for _, line := range result.Lines {
+  fmt.Println(line.Data)
+}
 ```
