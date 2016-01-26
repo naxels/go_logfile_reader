@@ -2,6 +2,7 @@ package logfilereader
 
 import (
 	"os"
+	"reflect"
 	"testing"
 )
 
@@ -18,13 +19,17 @@ type testpair struct {
 	regExPattern      string
 	expectedlineCount int
 	expectedMatches   int
+	compareResult     int
+	expectedResult    []Line
 }
 
 var tests = []testpair{
-	{testFile + testFileSuffix, "", 0, "", 13, 0},              //read fulltext, all lines, no RegEx test
-	{testFile + testFileSuffix, "", 0, "ERROR", 13, 1},         //read fulltest, all lines, RegEx test
-	{testFile + testFileSuffix, "", 0, "ERROR|E=[1-9]", 13, 2}, //read fulltest, all lines, advanced RegEx test
-	// {testFile + testFileSuffix, "", 0, "", 0, 0}, //template
+	{testFile + testFileSuffix, "", 0, "", 13, 0, 0, []Line{}},                                                                 //read fulltext, all lines, no RegEx test
+	{testFile + testFileSuffix, "", 0, "ERROR", 13, 1, 0, []Line{}},                                                            //read fulltest, all lines, RegEx test
+	{testFile + testFileSuffix, "", 0, "ERROR|E=[1-9]", 13, 2, 0, []Line{}},                                                    //read fulltest, all lines, advanced RegEx test
+	{testFile + testFileSuffix, "", 10, "", 10, 0, 0, []Line{}},                                                                //read first 10 lines
+	{testFile + testFileSuffix, "head", 1, "", 1, 0, 1, []Line{Line{Data: "2015/12/22 07:38:06 - Kitchen - Start of run.\n"}}}, //read 1 line from the head
+	// {testFile + testFileSuffix, "", 0, "", 0, 0, 0, []Line{}}, //template
 }
 
 func TestRead(t *testing.T) {
@@ -40,8 +45,8 @@ func TestRead(t *testing.T) {
 		}
 
 		//test Lines in result
-		if len(result.Lines) != pair.expectedlineCount {
-			t.Fatalf("Read(%q) resultLines = %v, expected %v", testFile, len(result.Lines), pair.expectedlineCount)
+		if result.Count() != pair.expectedlineCount {
+			t.Fatalf("Read(%q) resultLines = %v, expected %v", testFile, result.Count(), pair.expectedlineCount)
 		}
 
 		resultMatches := 0
@@ -53,6 +58,13 @@ func TestRead(t *testing.T) {
 		//test Match count in result
 		if resultMatches != pair.expectedMatches {
 			t.Fatalf("Read(%q) resultMatches = %v, expected %v", testFile, resultMatches, pair.expectedMatches)
+		}
+
+		//test exact result
+		if pair.compareResult == 1 {
+			if reflect.DeepEqual(result.Lines, pair.expectedResult) == false {
+				t.Fatalf("Read(%q) got = %v, expected %v", testFile, result.Lines, pair.expectedResult)
+			}
 		}
 
 		t.Logf("result: %+v", result)

@@ -18,6 +18,11 @@ func (l *Logfile) Add(data Line) {
 	l.Lines = append(l.Lines, data)
 }
 
+//Count return linecount in Logfile
+func (l *Logfile) Count() int {
+	return len(l.Lines)
+}
+
 //Line struct for file lines
 type Line struct {
 	Data    string  `json:"data"`
@@ -55,7 +60,7 @@ func Read(fileLocation string, readFrom string, linesToRead int, regExPattern st
 
 	for {
 		fileline, err := reader.ReadString('\n')
-		if err == io.EOF {
+		if err == io.EOF || (linesToRead > 0 && l.Count() == linesToRead) {
 			break
 		} else if err != nil {
 			return &l, err

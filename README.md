@@ -4,9 +4,8 @@ Simple Golang logfile reader written to help read in a logfile
 and do a RegEx to for example highlight matches on a line
 
 **TODO:**
-- implement the option only read given number of lines from file
-- implement the option to read from head or tail
-- create tests (head + lines read, tail + lines read, lines to read larger than file (catch more lines than 'file' error without user error))
+- implement the option to read from tail
+- create tests tail + lines read, lines to read larger than file (catch more lines than 'file' error without user error))
 
 
 You can use a go routine to input a volume of log files and get lines back
